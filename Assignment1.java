@@ -1,21 +1,26 @@
+
 /*************************************************************************
  *
  *  Pace University
  *
  *  Course: CS 608 Algorithms and Computing Theory
+ *  Semester: Spring 2018
  *  Author: Constantin Mitides
  *  Collaborators: Arun Mathew
  *  References:
  *  How to generate random range including negative numbers:
  *  https://stackoverflow.com/questions/27976857/how-to-get-random-number-with-negative-number-in-range
  * 
+ *  Pseudocode for Kadane's Algorithm:
+ *  http://www.algorithmist.com/index.php/Kadane%27s_Algorithm
+ * 
  *
  *  Assignment: 1
  *  Problem: Maximum Subarray Problem: finding the contiguous subarray, within an array of numbers that has the largest sum
- *  Description: Compare and varify various inputs for a bruteforce MSS and a divide and conquer MSS
+ *  Description: Compare and varify various inputs for a bruteforce MSS and a divide and conquer MSS, (Kadane's Algorithm included as extra credit.)
  *
- *  Input: array size
- *  Output: running times to search and compute the maximum subarray's sum
+ *  Input: Array size (size of N)
+ *  Output: Running times of the computed maximum subarray's sum, and the sum for each algorithm.
  *
  *  Visible data fields:
  *  public static int smallestInt
@@ -24,8 +29,8 @@
  *  public static void main(String[] args)
  *  public static int[] randArray(int n)
  *  public static int bruteForceMSS(int arry[])
- *   public static int maxSubArray(int[] a, int low, int high)
- *   public static int maxCrossingSubArray(int[] a, int low, int mid, int high)
+ *  public static int maxSubArray(int[] a, int low, int high)
+ *  public static int maxCrossingSubArray(int[] a, int low, int mid, int high)
  *   
  *
  *
@@ -66,8 +71,7 @@ class Assignment1{
 /***START PROGRAM ************************************************************************************/
     public static void main(String[] args){
         // int[] myTestArray = {-2,1,-3,4,-1,2,1,-5,4};
-        // int kadanesum = kadaneMethod(myTestArray);
-        // System.out.println(kadanesum);
+        
         Scanner scan = new Scanner(System.in);
         System.out.println("Please enter the size of n");
         int n = scan.nextInt();
@@ -102,18 +106,16 @@ class Assignment1{
         System.out.println("generating values for randArray");
         for (int i = 0; i < randArray.length; i++) {
             randArray[i] = randNegPos.nextInt(10 + 1 + 10) - 10;
-            // System.out.println(randArray[i]);
         }
         return randArray;
     }
 
     public static int bruteForceMSS(int arry[]) {
-       
         //you want the max to start out at the lowest possible number. 
         int max = smallestInt;
         // System.out.println("max starts at " + max);
         int sum = 0;
-        System.out.println("calculating in bruteforce");
+        System.out.println("calculating in bruteforce...");
         for (int i = 0; i < arry.length; i++) {
             sum = 0;
             for (int j = i; j < arry.length; j++) {
@@ -125,14 +127,12 @@ class Assignment1{
             }
         }
         return max;
-
     }
-
+    //This is Divide and Conquer Method
     static int maxSubArray(int[] a, int low, int high) {
         //base case
         if (low == high)
             return a[low];
-
         int mid = (low + high) / 2;
         int leftSum = maxSubArray(a, low, mid);
         int rightSum = maxSubArray(a, mid + 1, high);
@@ -154,13 +154,16 @@ class Assignment1{
         int leftSum = smallestInt;
         int rightSum = smallestInt;
         int sum = 0;
+        //this loop is for the "left half" of the array
         for (int i = mid; i >= low; i--) {
             sum = sum + a[i];
             if (sum > leftSum) {
                 leftSum = sum;
             }
         }
+        //reset the sum so we can work on the rightSum
         sum = 0;
+        //this loop is for the "right half" of the array
         for (int j = mid + 1; j <= high; j++) {
             sum = sum + a[j];
             if (sum > rightSum) {
