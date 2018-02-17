@@ -60,15 +60,15 @@
  *   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Extra Credit~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *   Kadane's Algorithm was expected to be O(n) as we can see in the chart, the runtime in nanoseconds is very much inline with 
  *   what we would expect for a linear runtime. The differences in sizes of N make a very minimal change in the increase of time, there is barely 
- *   an increase of even a single digit, we could say that the increase is < = 1 digit, therefore we are operating in O(n).
+ *   an increase of a single digit, we could say that the increase is <= 1 digit, therefore we are operating in O(n).
  *
  *************************************************************************/
 import java.util.*;
 
-class Assignment1{
+class MaxSubArray{
     
     public static int smallestInt = (int) Integer.MIN_VALUE;
-/***START PROGRAM ************************************************************************************/
+    /***START PROGRAM ************************************************************************************/
     public static void main(String[] args){
         // int[] myTestArray = {-2,1,-3,4,-1,2,1,-5,4};
         
@@ -83,12 +83,12 @@ class Assignment1{
         long startTime = System.nanoTime();
         int mss = maxSubArray(myRandArray, 0, high);
         System.out.println("The time taken by Divide and Conquer is " + (System.nanoTime() - startTime) + " nanoseconds.");
+        System.out.println("The DC Max Subarray Sum of the random array of size " + n + " is " + mss);
 
         startTime = System.nanoTime();
         int bForceMSS = bruteForceMSS(myRandArray);
         System.out.println("The time taken by Bruteforce is " + (System.nanoTime() - startTime) + " nanoseconds.");
-
-        System.out.println("The DC Max Subarray Sum of the random array of size "+n+" is " +mss);
+        
         System.out.println("The BF Max Subarray Sum of the random array of size "+n+" is " +bForceMSS);
 
         startTime = System.nanoTime();
